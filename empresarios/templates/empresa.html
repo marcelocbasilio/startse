@@ -41,7 +41,7 @@
                         <a href="#" class="sub-fonte">Ver investidores</a>
                     </div>
                     <div class="col-md">
-                        <h2 class="titulo2">0 Captados</h2>
+                        <h2 class="titulo2">{{total_captado}} Captados</h2>
                     </div>
                 </div>
                 <hr>
@@ -50,9 +50,9 @@
                         <h5>Percentual de equity vendido</h5>
                         <div class="progress">
                             <div class="progress-bar bg-primary"
-                                 style="width: 10%"></div>
+                                 style="width:{{percentual_vendido}}%"></div>
                             <div class="progress-bar bg-success"
-                                 style="width: 20%"></div>
+                                 style="width:{{empresa.percentual_equity}}%"></div>
                         </div>
                         <br>
                         <label class="point-white"></label><span>&nbsp&nbsp Percentual total da empresa</span>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="col-md">
                         <h5>Valuation</h5>
-                        <span class="sub-fonte">Atual: 000</span>
+                        <span class="sub-fonte">Atual: {{valuation_atual}}</span>
                         <br>
                         <span class="sub-fonte">Esperado: {{ empresa.valuation }}</span>
                     </div>
@@ -129,18 +129,18 @@
                 <h3>Solicitações de investimentos</h3>
                 <hr>
                 <br>
-                
+                    {% for pie in proposta_investimentos_enviada %}
                     <div class="bg-color-dark card-investimento">
                         <div class="row">
                             <div class="col-md">
                                 <img src="{% static 'geral/img/foto_perfil.webp' %}" class="foto-perfil" alt="">
                             </div>
                             <div class="col-md-5" style="text-align: left">
-                                <span class="sub-fonte">Caio</span>
+                                <span class="sub-fonte">{{ pie.investidor }}</span>
                                 <br>
-                                <span class="sub-fonte2">R$ 9000</span>
+                                <span class="sub-fonte2">R$ {{ pie.valor}}</span>
                                 <br>
-                                <span class="sub-fonte2">1% 
+                                <span class="sub-fonte2">{{ pie.percentual }}%
 
                                    
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" style="color: #00ff00;" viewBox="0 0 16 16">
@@ -155,14 +155,14 @@
                                 </span>
                             </div>
                             <div class="col-md">
-                                <a href="#" class="btn btn-indigo-normal">Aceitar</a>
+                                <a href="{% url 'gerenciar_proposta' pie.id %}?acao=aceitar" class="btn btn-indigo-normal">Aceitar</a>
                                 <br>
-                                <a href="#" style="margin-top: 5px;" class="btn btn-danger">Negar</a>
+                                <a href="{% url 'gerenciar_proposta' pie.id %}?acao=recusar" style="margin-top: 5px;" class="btn btn-danger">Negar</a>
                             </div>
                         </div>
                     </div>
                     <br>
-                
+                    {% endfor %}
             </div>
         </div>
     </div>
